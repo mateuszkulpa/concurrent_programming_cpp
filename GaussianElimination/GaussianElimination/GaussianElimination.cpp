@@ -41,9 +41,29 @@ void save_matrix_to_csv(string path, vector<vector<T>> matrix) {
 	}
 }
 
+template <typename T>
+vector<vector<T>> convert_to_triangular_matrix(vector<vector<T>> matrix) {
+	vector<vector<T>> results = {};
+	for (int i = 0; i < matrix.size(); i++)
+	{
+		vector<T> cells = {};
+		for (int j = 0; j < matrix[i].size(); j++)
+		{
+			if (j < i)
+				cells.push_back(0);
+			else
+				cells.push_back(matrix[i][j]);
+		}
+		results.push_back(cells);
+	}
+
+	return results;
+}
 
 int main()
 {
 	auto matrix = parse_csv_to_matrix<double>("C.csv", DELIMITER);
+	auto triangular_matrix = convert_to_triangular_matrix(matrix);
+
 	save_matrix_to_csv<double>("test.csv", matrix);
 }
